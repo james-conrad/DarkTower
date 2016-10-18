@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="hexagonal" renderorder="right-down" width="20" height="40" tilewidth="150" tileheight="100" hexsidelength="0" staggeraxis="y" staggerindex="odd" nextobjectid="1">
+ <tileset firstgid="1" name="hex_tiles" tilewidth="100" tileheight="100">
+  <image source="../Images/hex_tiles.png" trans="00ff00" width="400" height="400"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="20" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzt07EKgDAMRdEqRpdQ+/9f65LAI+Bg8hYhw0WnQ2zjPca4u677nNpzES2WJ2ae5knBWuBNqzpjNCvzTfAY881gelnTrcuqWGj6zijB05f3bEeYby96uB+M+Xzv4llmLYH7ZXn+X+BeZ89ugacFy0NPih5+nw7OPi9rI3rM/UOT5XXd33oAGOMthA==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="20" height="40">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIKhDbiGqNmjgHTAMYjN46aiWbRId7xUNpea/h0Fo2AUjCwAAP8XAFw=
+  </data>
+ </layer>
+</map>
