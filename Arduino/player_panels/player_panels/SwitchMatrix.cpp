@@ -97,7 +97,7 @@ void SwitchMatrix::handleInterrupt()
         {
             _buttonState |= 1 << buttonIndex;
         }
-        
+
         history++;
         buttonIndex++;
     }
@@ -128,4 +128,3 @@ void SwitchMatrix::_advanceRowAddress()
         digitalWrite(_rowPins[iRow], _rowIndex != iRow);
     }
 }
-

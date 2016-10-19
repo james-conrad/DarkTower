@@ -46,4 +46,3 @@ protected:
 };
 
 #endif // _SWITCH_MATRIX_H_
-

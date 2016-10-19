@@ -13,7 +13,7 @@ public:
         UNDERLINE  = 2,
         BLINK      = 3,
         REVERSE    = 4,
-        
+
         FG_Black   = 30,
         FG_Red     = 31,
         FG_Green   = 32,
@@ -36,7 +36,7 @@ public:
     void clearAll();
     void clear();
     void eraseLine();
-    
+
     void cursor(uint8_t line = 0, uint8_t column = 0);
     void cursorUp(uint8_t count = 1);
     void cursorDown(uint8_t count = 1);
@@ -75,4 +75,3 @@ private:
 };
 
 #endif // _ANSI_TERM_H_
-

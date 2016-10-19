@@ -29,4 +29,3 @@ private:
 };
 
 #endif // _CARD_INTERFACE_H_
-

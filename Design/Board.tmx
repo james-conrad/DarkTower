@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="hexagonal" renderorder="right-down" width="20" height="40" tilewidth="150" tileheight="100" hexsidelength="0" staggeraxis="y" staggerindex="odd" nextobjectid="1">
  <tileset firstgid="1" name="hex_tiles" tilewidth="100" tileheight="100">
-  <image source="../Images/hex_tiles.png" trans="00ff00" width="400" height="400"/>
+  <image source="../Assets/Source/Images/hex_tiles.png" trans="00ff00" width="400" height="400"/>
  </tileset>
  <layer name="Tile Layer 1" width="20" height="40">
   <data encoding="base64" compression="zlib">

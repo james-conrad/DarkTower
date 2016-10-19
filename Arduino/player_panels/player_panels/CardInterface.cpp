@@ -93,4 +93,3 @@ bool CardInterface::writeBlock(uint8_t block, uint8_t* data)
 
     return success;
 }
-

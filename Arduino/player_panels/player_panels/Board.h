@@ -133,4 +133,3 @@ static Tile tiles[num_tiles] = {
 };
 
 Tile* get_tile(int id);
-

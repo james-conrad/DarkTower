@@ -52,28 +52,28 @@ RotaryEncoder encoder4(encoderConfig4);
 
 CardInterface::Config cardConfig =
 {
-    10 /* Chip Select pin */  
+    10 /* Chip Select pin */
 };
 
 CardInterface card(cardConfig);
 
 CardInterface::Config cardConfig2 =
 {
-    9 /* Chip Select pin */  
+    9 /* Chip Select pin */
 };
 
 CardInterface card2(cardConfig2);
 
 CardInterface::Config cardConfig3 =
 {
-    8 /* Chip Select pin */  
+    8 /* Chip Select pin */
 };
 
 CardInterface card3(cardConfig3);
 
 CardInterface::Config cardConfig4 =
 {
-    7 /* Chip Select pin */  
+    7 /* Chip Select pin */
 };
 
 CardInterface card4(cardConfig4);
@@ -101,7 +101,7 @@ void setup(void)
     digitalWrite(cardConfig2.chipSelectPin, HIGH);
     digitalWrite(cardConfig3.chipSelectPin, HIGH);
     digitalWrite(cardConfig4.chipSelectPin, HIGH);
-    
+
     card.init();
     card2.init();
     card3.init();
@@ -112,7 +112,7 @@ void setup(void)
 
     Serial.begin(9600);
     Serial1.begin(38400);
- 
+
     term.clearAll();
 
     strip.begin();
@@ -175,7 +175,7 @@ void setBackground(uint8_t location)
 }
 
 uint32_t terrain_colors[Terrain_Count] = {
-    0x304000, // Terrain_Plains 
+    0x304000, // Terrain_Plains
     0xffff00, // Terrain_Desert,
     0x1122bb, // Terrain_Mountain,
     0x3300ff, // Terrain_Swamp,
@@ -194,12 +194,12 @@ void ISR()
     encoder2.handleInterrupt();
     encoder3.handleInterrupt();
     encoder4.handleInterrupt();
- 
+
     t++;
     if (t > 30)
     {
         t = 0;
-        
+
         for(int i = 0; i< num_tiles; i++)
         {
             Tile& tile = tiles[i];
@@ -294,7 +294,7 @@ void loop(void)
                 travel_dir = counter_clockwise(travel_dir);
                 destination_id = tiles[tileId].adjacent_id[travel_dir];
             }
-            while (destination_id == -1);       
+            while (destination_id == -1);
         }
 
         term.attr(AnsiTerm::FG_Red);
@@ -315,7 +315,7 @@ void loop(void)
         lastEncoderValue2 = newEncoderValue2;
 
     }
- 
+
     int32_t newEncoderValue3 = encoder3.getCount();
 
     if (lastEncoderValue3 != newEncoderValue3)
@@ -408,7 +408,7 @@ void loop(void)
             term.attr();
         }
     }
-    
+
     static uint32_t previousCard4 = 0;
 
     //card4.scan();
@@ -447,5 +447,3 @@ void loop(void)
         Serial.write(incomingByte);
     }
 }
-
-

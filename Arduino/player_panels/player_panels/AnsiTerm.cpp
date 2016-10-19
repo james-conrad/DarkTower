@@ -17,13 +17,13 @@ void AnsiTerm::clearAll()
 void AnsiTerm::clear()
 {
     const char cmd[] = {0x1B, 0x5B, '2', 'J', 0};
-    _stream.print(cmd);    
+    _stream.print(cmd);
 }
 
 void AnsiTerm::eraseLine()
 {
     const char cmd[] = {0x1B, 0x5B, 'K', 0};
-    _stream.print(cmd);        
+    _stream.print(cmd);
 }
 
 void AnsiTerm::cursor(uint8_t line, uint8_t column)
@@ -33,7 +33,7 @@ void AnsiTerm::cursor(uint8_t line, uint8_t column)
     _stream.print(line);
     _stream.print(';');
     _stream.print(column);
-    _stream.print('H'); 
+    _stream.print('H');
 }
 
 void AnsiTerm::cursorUp(uint8_t count)
@@ -208,4 +208,3 @@ size_t AnsiTerm::println()
 {
     return _stream.println();
 }
-

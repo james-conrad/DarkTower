@@ -16,7 +16,7 @@ public:
     RotaryEncoder(const Config& config);
 
     void init();
- 
+
     virtual void handleInterrupt();
 
     void resetCount();
@@ -32,4 +32,3 @@ private:
 };
 
 #endif // _ROTARY_ENCODER_H_
-

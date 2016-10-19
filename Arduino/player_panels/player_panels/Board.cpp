@@ -15,7 +15,7 @@ Direction clockwise(Direction in)
     {
         case Direction_North:
             return Direction_NorthEast;
-              
+
         case Direction_NorthEast:
             return Direction_SouthEast;
 
@@ -43,7 +43,7 @@ Direction counter_clockwise(Direction in)
         case Direction_North:
             return Direction_NorthWest;
             break;
-              
+
         case Direction_NorthWest:
             return Direction_SouthWest;
 
