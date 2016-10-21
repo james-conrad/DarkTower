@@ -33,7 +33,9 @@ Game::Game()
           Player(*this, p3_config),
           Player(*this, p4_config)
       })
-    , _activePlayerId(0)
+    , _isPlaying({false, false, false, false})
+    , _board()
+    , _activePlayerId(-1)
 {
     transitionTo(&Game::State_Init);
 }
@@ -86,22 +88,91 @@ void Game::setBackground(Terrain terrain, bool road, TimeOfDay tod)
 }
 
 
-void Game::State_Init(Message m,const  char* userData)
+void Game::playSound(const char* sound)
+{
+    char command[100];
+    snprintf(command, 100, "snd %s.raw\n", sound);
+    Serial1.write(command);
+}
+
+
+void Game::State_Init(const Event& e)
+{
+    switch (e.sig)
+    {
+        case Sig_StateEnter:
+        {
+            _activePlayerId = -1;
+        }
+        break;
+
+        case Sig_Card:
+        {
+            const CardEvent& ce = *static_cast<const CardEvent*>(&e);
+            if (ce.getAdded())
+            {
+                playSound("achieve");
+                _isPlaying[ce.getPlayerId()] = true;
+            }
+            else
+            {
+                playSound("lose");
+                _isPlaying[ce.getPlayerId()] = false;
+            }
+        }
+        break;
+
+        case Sig_Button:
+        {
+            const ButtonEvent&  be = *static_cast<const ButtonEvent*>(&e);
+            if (!be.getPressed() && be.getButtonId() == 0)
+            {
+                if (_isPlaying[be.getPlayerId()])
+                {
+                    transitionTo(&Game::State_Start);
+                }
+                else
+                {
+                    playSound("lose");
+                }
+            }
+        }
+        break;
+
+        default:
+          break;
+    }
+}
+
+void Game::State_Start(const Event& e)
+{
+    switch (e.sig)
+    {
+        case Sig_StateEnter:
+        {
+            playSound("achieve");
+            for (int i = 0; i < maxPlayers; ++i)
+            {
+                if (_isPlaying[i])
+                {
+                    _activePlayerId = i;
+                    break;
+                }
+            }
+        }
+        break;
+
+        default:
+          break;
+    }
+}
+
+void Game::State_PlayerTurn(const Event& e)
 {
 
 }
 
-void Game::State_Start(Message m,const  char* userData)
-{
-
-}
-
-void Game::State_PlayerTurn(Message m,const  char* userData)
-{
-
-}
-
-void Game::State_PlayerEndTurn(Message m,const  char* userData)
+void Game::State_PlayerEndTurn(const Event& e)
 {
 
 }

@@ -157,9 +157,11 @@ void ISR()
             }
         }
 
-
         for (int i = 0; i < game.getMaxPlayers(); ++i)
         {
+            if (!game.isPlaying(i))
+                continue;
+
             Player& p = game.getPlayer(i);
             Tile& playerTile = *board.getTile(p.getTileId());
             uint32_t c = p.getColor();
@@ -203,6 +205,10 @@ void loop(void)
             term.print("Button pressed: ");
             term.println(button);
             term.attr();
+
+            int playerId = button / 6;
+            int buttonId = button % 6;
+            game.signal(ButtonEvent(playerId, buttonId, true));
         }
         if (matrix.buttonReleased(button))
         {
@@ -211,6 +217,10 @@ void loop(void)
             term.print(button);
             term.attr();
             term.println();
+
+            int playerId = button / 6;
+            int buttonId = button % 6;
+            game.signal(ButtonEvent(playerId, buttonId, false));
         }
     }
 
@@ -309,6 +319,8 @@ void loop(void)
             term.attr(AnsiTerm::FG_Red);
             term.println("Card removed.");
             term.attr();
+
+            game.signal(CardEvent(0, false));
         }
         else
         {
@@ -316,6 +328,8 @@ void loop(void)
             term.print("Card scan: ");
             term.println(card1.getUid());
             term.attr();
+
+            game.signal(CardEvent(0, true));
         }
     }
     static uint32_t previousCard2 = 0;
@@ -332,6 +346,7 @@ void loop(void)
             term.println("Card removed.");
             term.attr();
 
+            game.signal(CardEvent(1, false));
         }
         else
         {
@@ -339,6 +354,8 @@ void loop(void)
             term.print("Card scan: ");
             term.println(card2.getUid());
             term.attr();
+
+            game.signal(CardEvent(1, true));
         }
     }
     static uint32_t previousCard3 = 0;
@@ -355,6 +372,7 @@ void loop(void)
             term.println("Card removed.");
             term.attr();
 
+            game.signal(CardEvent(2, false));
         }
         else
         {
@@ -362,6 +380,8 @@ void loop(void)
             term.print("Card scan: ");
             term.println(card3.getUid());
             term.attr();
+
+            game.signal(CardEvent(2, true));
         }
     }
 
@@ -378,6 +398,8 @@ void loop(void)
             term.attr(AnsiTerm::FG_Yellow);
             term.println("Card removed.");
             term.attr();
+
+            game.signal(CardEvent(3, false));
         }
         else
         {
@@ -385,6 +407,8 @@ void loop(void)
             term.print("Card scan: ");
             term.println(card4.getUid());
             term.attr();
+
+            game.signal(CardEvent(3, true));
         }
     }
 

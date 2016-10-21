@@ -22,10 +22,10 @@ public:
     uint32_t getColor() { return _color; }
 
 private:
-    void State_Wait(Message m,const  char* userData);
-    void State_Turn(Message m, const char* userData);
-    void State_Travel(Message m, const char* userData);
-    void State_Encounter(Message m, const char* userData);
+    void State_Wait(const Event& e);
+    void State_Turn(const Event& e);
+    void State_Travel(const Event& e);
+    void State_Encounter(const Event& e);
 
     Game& _game;
 

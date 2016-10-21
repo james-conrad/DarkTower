@@ -1,15 +1,24 @@
 #ifndef _STATE_MACHINE_H_
 #define _STATE_MACHINE_H_
 
-enum Message
+enum Signal
 {
-    Msg_Enter,
-    Msg_Exit,
-    Msg_BeginTurn,
-    Msg_CardOn,
-    Msg_CardOff,
-    Msg_Action,
-    Msg_Dial,
+    Sig_StateEnter,
+    Sig_StateExit,
+    Sig_BeginTurn,
+    Sig_Card,
+    Sig_Button,
+    Sig_Action,
+    Sig_Dial,
+};
+
+class Event
+{
+public:
+    Event(Signal _sig) : sig(_sig) {}
+    virtual ~Event() {}
+
+    Signal sig;
 };
 
 template <typename T>
@@ -21,7 +30,7 @@ public:
       , _exiting(false)
     {}
 
-    typedef void (T::*StateFn)(Message m, const char* userData);
+    typedef void (T::*StateFn)(const Event& e);
 
     void transitionTo(StateFn state)
     {
@@ -32,18 +41,18 @@ public:
         }
 
         _exiting = true;
-        signal(Msg_Exit);
+        signal(Event(Sig_StateExit));
         _exiting = false;
 
         _currentState = state;
-        signal(Msg_Enter);
+        signal(Event(Sig_StateEnter));
     }
 
-    void signal(Message m, const char* userData = nullptr)
+    void signal(const Event& e)
     {
         if (_currentState)
         {
-            (static_cast<T*>(this)->*_currentState)(m, userData);
+            (static_cast<T*>(this)->*_currentState)(e);
         }
     }
 

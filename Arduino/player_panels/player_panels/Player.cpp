@@ -23,21 +23,21 @@ Player::Player(Game& game, const Player::Config& config)
     }
 }
 
-void Player::State_Wait(Message m,const  char* userData)
+void Player::State_Wait(const Event& e)
 {
-    switch (m)
+    switch (e.sig)
     {
-        case Msg_BeginTurn:
+        case Sig_BeginTurn:
             transitionTo(&Player::State_Turn);
             break;
     }
 }
 
-void Player::State_Turn(Message m, const char* userData)
+void Player::State_Turn(const Event& e)
 {
-    switch (m)
+    switch (e.sig)
     {
-        case Msg_Enter:
+        case Sig_StateEnter:
             // check the current active card.
             // is it travel?
             // transitionTo(Player::State_Travel);
@@ -45,7 +45,7 @@ void Player::State_Turn(Message m, const char* userData)
             // transitionTo(Player::State_Explore);
             break;
 
-        case Msg_CardOn:
+        case Sig_Card:
             // check the current active card.
             // is it travel?
             // transitionTo(Player::State_Travel);
@@ -55,17 +55,17 @@ void Player::State_Turn(Message m, const char* userData)
     }
 }
 
-void Player::State_Travel(Message m, const char* userData)
+void Player::State_Travel(const Event& e)
 {
-    switch (m)
+    switch (e.sig)
     {
-        case Msg_Dial:
+        case Sig_Dial:
             // update target location based on dial movement
             break;
 
-        case Msg_Action:
+        case Sig_Action:
         {
-            if (strncmp(userData, "move", 5) == 0)
+            //if (strncmp(userData, "move", 5) == 0)
             {
                 // move the player
                 // advance time of day
@@ -77,6 +77,6 @@ void Player::State_Travel(Message m, const char* userData)
     }
 }
 
-void Player::State_Encounter(Message m, const char* userData)
+void Player::State_Encounter(const Event& e)
 {
 }
