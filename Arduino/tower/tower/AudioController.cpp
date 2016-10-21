@@ -15,6 +15,7 @@ AudioConnection          patchCord1(playFlashRaw1, dac1);
 // GUItool: end automatically generated code
 
 AudioController::AudioController()
+    : _ampEnabled(true)
 {}
 
 void AudioController::init()
@@ -34,9 +35,20 @@ void AudioController::init()
     delay(10);             // allow time to wake up}
 }
 
+bool AudioController::isAmpEnabled()
+{
+    return _ampEnabled;
+}
+
 void AudioController::setAmpEnabled(bool enabled)
 {
+    _ampEnabled = enabled;
     digitalWrite(AMP_EN, enabled);
+
+    if (enabled)
+    {
+        delay(10);             // allow time to wake up}
+    }
 }
 
 void AudioController::update()
@@ -45,6 +57,9 @@ void AudioController::update()
 
 void AudioController::playAudio(const char* filename)
 {
+    if (!_ampEnabled)
+        setAmpEnabled(true);
+
     playFlashRaw1.play(filename);
 }
 

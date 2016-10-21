@@ -13,6 +13,10 @@ public:
     bool isPlaying();
 
     void setAmpEnabled(bool enabled);
+    bool isAmpEnabled();
+
+private:
+    bool _ampEnabled;
 };
 
 #endif // _AUDIO_CONTROLLER_H_

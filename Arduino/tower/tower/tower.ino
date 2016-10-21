@@ -110,6 +110,10 @@ void ISR()
 
 void loop(void)
 {
+    if (!audio.isPlaying() && audio.isAmpEnabled())
+    {
+        audio.setAmpEnabled(false);
+    }
     //display.setColorMap(image);
 
 //    audio.playRandomAudio();
