@@ -1,7 +1,10 @@
 #include "Board.h"
 
+Board::Board()
+{
+}
 
-Tile* get_tile(int id)
+Tile* Board::getTile(int id)
 {
     if (id < 0 || id >= num_tiles)
         return nullptr;

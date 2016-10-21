@@ -1,35 +1,25 @@
 #include "Arduino.h"
 
 #include "Player.h"
+#include "Game.h"
 
-Player::Player()
-    : currentState(nullptr)
-    , exiting(false)
+Player::Player(Game& game, const Player::Config& config)
+    : StateMachine()
+    , _game(game)
+    , _color(config.color)
+    , _tileId(config.startingTileId)
+    , _travelDir(config.startingTravelDir)
+    , _destinationTileId(-1)
 {
     transitionTo(&Player::State_Wait);
-}
 
-void Player::transitionTo(Player::StateFn state)
-{
-    if (exiting)
+    Tile& tile = *game.getBoard().getTile(_tileId);
+    _destinationTileId = tile.adjacent_id[_travelDir];
+
+    while (_destinationTileId == -1)
     {
-        //ASSERT!!!
-        return;
-    }
-
-    exiting = true;
-    signal(Msg_Exit);
-    exiting = false;
-
-    currentState = state;
-    signal(Msg_Enter);
-}
-
-void Player::signal(Message m, const char* userData)
-{
-    if (currentState)
-    {
-        (this->*currentState)(m, userData);
+        _travelDir = clockwise(_travelDir);
+        _destinationTileId = tile.adjacent_id[_travelDir];
     }
 }
 
