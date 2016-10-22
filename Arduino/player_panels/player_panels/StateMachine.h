@@ -5,7 +5,9 @@ enum Signal
 {
     Sig_StateEnter,
     Sig_StateExit,
+
     Sig_BeginTurn,
+    Sig_EndTurn,
     Sig_Card,
     Sig_Button,
     Sig_Action,

@@ -4,52 +4,69 @@
 #include "StateMachine.h"
 #include "Player.h"
 #include "Board.h"
-
-enum TimeOfDay
-{
-    TOD_Daytime,
-    TOD_Evening,
-    TOD_Night,
-};
+#include "TimeOfDay.h"
 
 static const int maxPlayers = 4;
 
-class CardEvent : public Event
+class PlayerEvent : public Event
 {
 public:
-    CardEvent(int playerId, bool added)
-        : Event(Sig_Card)
-        , _playerId(playerId)
-        , _added(added)
+    PlayerEvent(Signal sig, int playerId)
+      : Event(sig)
+      , _playerId(playerId)
     {}
 
     int getPlayerId() const { return _playerId; }
-    bool getAdded() const { return _added; }
 
 private:
     int _playerId;
+};
+
+class CardEvent : public PlayerEvent
+{
+public:
+    CardEvent(int playerId, bool added)
+        : PlayerEvent(Sig_Card, playerId)
+        , _added(added)
+    {}
+
+    bool getAdded() const { return _added; }
+
+private:
     bool _added;
 };
 
 
-class ButtonEvent : public Event
+class ButtonEvent : public PlayerEvent
 {
 public:
     ButtonEvent(int playerId, int buttonId, bool pressed)
-        : Event(Sig_Button)
-        , _playerId(playerId)
+        : PlayerEvent(Sig_Button, playerId)
         , _buttonId(buttonId)
         , _pressed(pressed)
     {}
 
-    int getPlayerId() const { return _playerId; }
     int getButtonId() const { return _buttonId; }
     bool getPressed() const { return _pressed; }
 
 private:
-    int _playerId;
     int _buttonId;
     bool _pressed;
+};
+
+
+class DialEvent : public PlayerEvent
+{
+public:
+    DialEvent(int playerId, int dialChange)
+        : PlayerEvent(Sig_Dial, playerId)
+        , _dialChange(dialChange)
+    {}
+
+    int getDialChange() const { return _dialChange; }
+
+private:
+    int _dialChange;
 };
 
 class Game : public StateMachine<Game>

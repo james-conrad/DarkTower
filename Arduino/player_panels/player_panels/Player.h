@@ -3,6 +3,7 @@
 
 #include "StateMachine.h"
 #include "Board.h"
+#include "TimeOfDay.h"
 
 class Game;
 
@@ -24,6 +25,7 @@ public:
 private:
     void State_Wait(const Event& e);
     void State_Turn(const Event& e);
+    void State_EndTurn(const Event& e);
     void State_Travel(const Event& e);
     void State_Encounter(const Event& e);
 
@@ -33,6 +35,7 @@ private:
     int _tileId;
     Direction _travelDir;
     int _destinationTileId;
+    TimeOfDay _tod;
 };
 
 #endif // _PLAYER_H_

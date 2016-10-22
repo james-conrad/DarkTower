@@ -167,7 +167,38 @@ void Game::State_Start(const Event& e)
                 turnTower();
             }
 
-            //player[_activePlayerId].signal(Event(Sig_BeginTurn));
+            _players[_activePlayerId].signal(Event(Sig_BeginTurn));
+        }
+        break;
+
+        case Sig_EndTurn:
+        {
+            do
+            {
+                turnTower();
+
+                _activePlayerId ++;
+                if (_activePlayerId >= maxPlayers)
+                {
+                    _activePlayerId = 0;
+                }
+            }
+            while (!isPlaying(_activePlayerId));
+
+            _players[_activePlayerId].signal(Event(Sig_BeginTurn));
+        }
+        break;
+
+        case Sig_Card:
+        case Sig_Dial:
+        case Sig_Button:
+        case Sig_Action:
+        {
+            const PlayerEvent* pe = static_cast<const PlayerEvent*>(&e);
+            if (pe)
+            {
+                _players[pe->getPlayerId()].signal(*pe);
+            }
         }
         break;
 

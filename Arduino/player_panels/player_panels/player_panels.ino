@@ -193,6 +193,8 @@ int32_t lastEncoderValue2 = 0;
 int32_t lastEncoderValue3 = 0;
 int32_t lastEncoderValue4 = 0;
 
+uint32_t scanCounter = 0;
+
 void loop(void)
 {
     matrix.update();
@@ -224,45 +226,11 @@ void loop(void)
         }
     }
 
-    // if (matrix.buttonPressed(2))
-    // {
-    //     if (destination_id != -1)
-    //     {
-    //         tileId = destination_id;
-    //         destination_id = tiles[tileId].adjacent_id[travel_dir];
-    //
-    //         setBackground(tiles[tileId].terrain, false, TOD_Evening);
-    //
-    //         while (destination_id == -1)
-    //         {
-    //             travel_dir = clockwise(travel_dir);
-    //             destination_id = tiles[tileId].adjacent_id[travel_dir];
-    //         }
-    //     }
-    // }
-
     int32_t newEncoderValue1 = encoder1.getCount();
 
     if (lastEncoderValue1 != newEncoderValue1)
     {
-        // if (newEncoderValue1 > lastEncoderValue1)
-        // {
-        //     do
-        //     {
-        //         travel_dir = clockwise(travel_dir);
-        //         destination_id = tiles[tileId].adjacent_id[travel_dir];
-        //     }
-        //     while (destination_id == -1);
-        // }
-        // else
-        // {
-        //     do
-        //     {
-        //         travel_dir = counter_clockwise(travel_dir);
-        //         destination_id = tiles[tileId].adjacent_id[travel_dir];
-        //     }
-        //     while (destination_id == -1);
-        // }
+        game.signal(DialEvent(0, newEncoderValue1 - lastEncoderValue1));
 
         term.attr(AnsiTerm::FG_Red);
         term.print("Encoder: ");
@@ -275,18 +243,21 @@ void loop(void)
 
     if (lastEncoderValue2 != newEncoderValue2)
     {
+        game.signal(DialEvent(1, newEncoderValue2 - lastEncoderValue2));
+
         term.attr(AnsiTerm::FG_Blue);
         term.print("Encoder: ");
         term.println(newEncoderValue2);
         term.attr();
         lastEncoderValue2 = newEncoderValue2;
-
     }
 
     int32_t newEncoderValue3 = encoder3.getCount();
 
     if (lastEncoderValue3 != newEncoderValue3)
     {
+        game.signal(DialEvent(2, newEncoderValue3 - lastEncoderValue3));
+
         term.attr(AnsiTerm::FG_Green);
         term.print("Encoder: ");
         term.println(newEncoderValue3);
@@ -298,6 +269,8 @@ void loop(void)
 
     if (lastEncoderValue4 != newEncoderValue4)
     {
+        game.signal(DialEvent(3, newEncoderValue4 - lastEncoderValue4));
+
         term.attr(AnsiTerm::FG_Yellow);
         term.print("Encoder: ");
         term.println(newEncoderValue4);
@@ -306,9 +279,11 @@ void loop(void)
 
     }
 
+    scanCounter++;
     static uint32_t previousCard1 = 0;
 
-    card1.scan();
+    if (scanCounter % 100 == 0)
+        card1.scan();
 
     if (card1.getUid() != previousCard1)
     {
@@ -334,7 +309,8 @@ void loop(void)
     }
     static uint32_t previousCard2 = 0;
 
-    card2.scan();
+    if (scanCounter % 100 == 25)
+        card2.scan();
 
     if (card2.getUid() != previousCard2)
     {
@@ -360,7 +336,8 @@ void loop(void)
     }
     static uint32_t previousCard3 = 0;
 
-    card3.scan();
+    if (scanCounter % 100 == 50)
+        card3.scan();
 
     if (card3.getUid() != previousCard3)
     {
@@ -387,7 +364,8 @@ void loop(void)
 
     static uint32_t previousCard4 = 0;
 
-    card4.scan();
+    if (scanCounter % 100 == 75)
+        card4.scan();
 
     if (card4.getUid() != previousCard4)
     {
