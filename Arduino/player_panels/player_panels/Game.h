@@ -70,6 +70,7 @@ public:
 
     void setBackground(Terrain terrain, bool road, TimeOfDay tod);
     void playSound(const char* sound);
+    void turnTower();
 
 private:
     Player _players[maxPlayers];

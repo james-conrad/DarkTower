@@ -95,6 +95,11 @@ void Game::playSound(const char* sound)
     Serial1.write(command);
 }
 
+void Game::turnTower()
+{
+    Serial1.write("rot cw\n");
+}
+
 
 void Game::State_Init(const Event& e)
 {
@@ -158,12 +163,16 @@ void Game::State_Start(const Event& e)
                     _activePlayerId = i;
                     break;
                 }
+
+                turnTower();
             }
+
+            //player[_activePlayerId].signal(Event(Sig_BeginTurn));
         }
         break;
 
         default:
-          break;
+            break;
     }
 }
 
