@@ -42,7 +42,7 @@ void Player::State_Turn(const Event& e)
         {
             Tile& tile = *_game.getBoard().getTile(_tileId);
             _tod = TOD_Daytime;
-            _game.setBackground(tile.terrain, false, _tod);
+            _game.setBackground(tile.terrain, _game.getBoard().hasRoad(_tileId), _tod);
             // check the current active card.
             // is it travel?
             // transitionTo(Player::State_Travel);
@@ -114,7 +114,7 @@ void Player::State_Turn(const Event& e)
                         _destinationTileId = tile.adjacent_id[_travelDir];
                     }
 
-                    _game.setBackground(tile.terrain, false, _tod);
+                    _game.setBackground(tile.terrain, _game.getBoard().hasRoad(_tileId), _tod);
                 }
             }
         }
@@ -127,8 +127,8 @@ void Player::State_EndTurn(const Event& e)
     switch (e.sig)
     {
         case Sig_StateEnter:
-            _game.signal(Event(Sig_EndTurn));
             transitionTo(&Player::State_Wait);
+            _game.signal(Event(Sig_EndTurn));
             break;
     }
 }

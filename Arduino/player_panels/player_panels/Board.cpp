@@ -12,6 +12,25 @@ Tile* Board::getTile(int id)
     return &tiles[id];
 }
 
+bool Board::hasRoad(int tileId)
+{
+    Tile* tile = getTile(tileId);
+    if (!tile)
+        return  false;
+
+    return tile->road[0] || tile->road[1] || tile->road[2] ||
+           tile->road[3] || tile->road[4] || tile->road[5];
+}
+
+bool Board::hasRoad(int tileId, Direction dir)
+{
+    Tile* tile = getTile(tileId);
+    if (!tile)
+        return  false;
+
+    return tile->road[dir];
+}
+
 Direction clockwise(Direction in)
 {
     switch (in)
